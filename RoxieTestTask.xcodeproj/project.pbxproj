@@ -7,9 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		71AD14F929633A4200C2E90B /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AD14F829633A4100C2E90B /* MainViewModel.swift */; };
+		71AD14FB29634A2800C2E90B /* TaxiRideTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AD14FA29634A2800C2E90B /* TaxiRideTableViewCell.swift */; };
+		71AD14FD29634DAA00C2E90B /* TaxiRideTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AD14FC29634DAA00C2E90B /* TaxiRideTableViewCellModel.swift */; };
 		71C71FE2296212E700264F36 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C71FE1296212E700264F36 /* AppDelegate.swift */; };
 		71C71FE4296212E700264F36 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C71FE3296212E700264F36 /* SceneDelegate.swift */; };
-		71C71FE6296212E700264F36 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C71FE5296212E700264F36 /* ViewController.swift */; };
+		71C71FE6296212E700264F36 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C71FE5296212E700264F36 /* MainViewController.swift */; };
 		71C71FE9296212E700264F36 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71C71FE7296212E700264F36 /* Main.storyboard */; };
 		71C71FEC296212E700264F36 /* RoxieTestTask.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 71C71FEA296212E700264F36 /* RoxieTestTask.xcdatamodeld */; };
 		71C71FEE296212E900264F36 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 71C71FED296212E900264F36 /* Assets.xcassets */; };
@@ -39,10 +42,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		71AD14F829633A4100C2E90B /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		71AD14FA29634A2800C2E90B /* TaxiRideTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaxiRideTableViewCell.swift; sourceTree = "<group>"; };
+		71AD14FC29634DAA00C2E90B /* TaxiRideTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaxiRideTableViewCellModel.swift; sourceTree = "<group>"; };
 		71C71FDE296212E700264F36 /* RoxieTestTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RoxieTestTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		71C71FE1296212E700264F36 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		71C71FE3296212E700264F36 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		71C71FE5296212E700264F36 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		71C71FE5296212E700264F36 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		71C71FE8296212E700264F36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		71C71FEB296212E700264F36 /* RoxieTestTask.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RoxieTestTask.xcdatamodel; sourceTree = "<group>"; };
 		71C71FED296212E900264F36 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -107,8 +113,11 @@
 			children = (
 				71C71FE1296212E700264F36 /* AppDelegate.swift */,
 				71C71FE3296212E700264F36 /* SceneDelegate.swift */,
-				71C71FE5296212E700264F36 /* ViewController.swift */,
+				71C71FE5296212E700264F36 /* MainViewController.swift */,
+				71AD14F829633A4100C2E90B /* MainViewModel.swift */,
 				71C720142962139E00264F36 /* NetworkManager.swift */,
+				71AD14FA29634A2800C2E90B /* TaxiRideTableViewCell.swift */,
+				71AD14FC29634DAA00C2E90B /* TaxiRideTableViewCellModel.swift */,
 				71C720162962142600264F36 /* AddressModel.swift */,
 				71C71FE7296212E700264F36 /* Main.storyboard */,
 				71C71FED296212E900264F36 /* Assets.xcassets */,
@@ -267,8 +276,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71AD14F929633A4200C2E90B /* MainViewModel.swift in Sources */,
 				71C71FEC296212E700264F36 /* RoxieTestTask.xcdatamodeld in Sources */,
-				71C71FE6296212E700264F36 /* ViewController.swift in Sources */,
+				71C71FE6296212E700264F36 /* MainViewController.swift in Sources */,
+				71AD14FB29634A2800C2E90B /* TaxiRideTableViewCell.swift in Sources */,
+				71AD14FD29634DAA00C2E90B /* TaxiRideTableViewCellModel.swift in Sources */,
 				71C720172962142600264F36 /* AddressModel.swift in Sources */,
 				71C720152962139E00264F36 /* NetworkManager.swift in Sources */,
 				71C71FE2296212E700264F36 /* AppDelegate.swift in Sources */,
@@ -457,6 +469,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -466,7 +479,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -485,6 +498,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -494,7 +508,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
