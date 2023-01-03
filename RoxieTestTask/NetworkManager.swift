@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class NetworkManager {
     static let shared = NetworkManager()
@@ -34,5 +35,9 @@ class NetworkManager {
         }.resume()
     }
     
-    
+    func fetchImage(urlString: String) -> UIImage {
+        guard let url = URL(string: urlString) else { return UIImage() }
+        guard let imageData = try? Data(contentsOf: url) else { return UIImage() }
+        return UIImage(data: imageData)!; #warning("remove force unwrapping")
+    }
 }

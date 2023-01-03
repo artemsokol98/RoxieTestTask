@@ -49,11 +49,20 @@ class MainViewController: UIViewController {
         
         NSLayoutConstraint.activate(tableViewConstraints)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let destanation = segue.destination as? DetailViewController else { return }
+        guard let index = sender as? Int else { return }
+        destanation.data = viewModel.taxiRide[index]
+    }
 
 }
 
 extension MainViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "ShowDetail", sender: indexPath.row)
+        tableView.deselectRow(at: indexPath, animated: false)
+    }
 }
 
 extension MainViewController: UITableViewDataSource {
