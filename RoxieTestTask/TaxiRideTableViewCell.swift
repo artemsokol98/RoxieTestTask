@@ -75,6 +75,7 @@ class TaxiRideTableViewCell: UITableViewCell {
         self.dateRide.text = cellInfo.dateRide
         self.costRide.text = cellInfo.costRide
     }
+    
 /*
     override func awakeFromNib() {
         super.awakeFromNib()

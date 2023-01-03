@@ -13,6 +13,7 @@ class DetailImageTableViewCell: UITableViewCell {
     
     lazy var carImage: UIImageView = {
         let image = UIImageView()
+        image.contentMode = .scaleAspectFit
         return image
     }()
     

@@ -10,12 +10,12 @@ import UIKit
 class DetailViewController: UIViewController {
     
     var data: AddressElement?
-    
+    /*
     lazy var carImage: UIImageView = {
         let image = UIImageView()
         return image
     }()
-    
+    */
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -80,5 +80,9 @@ extension DetailViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         1
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        300.0
     }
 }
