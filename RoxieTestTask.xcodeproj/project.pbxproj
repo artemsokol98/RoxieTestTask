@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		713E79402965B20700F9653C /* HeightOfTableViewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713E793F2965B20700F9653C /* HeightOfTableViewRow.swift */; };
+		713E794729661D0000F9653C /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713E794629661D0000F9653C /* DataManager.swift */; };
 		71AD14F929633A4200C2E90B /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AD14F829633A4100C2E90B /* MainViewModel.swift */; };
 		71AD14FB29634A2800C2E90B /* TaxiRideTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AD14FA29634A2800C2E90B /* TaxiRideTableViewCell.swift */; };
 		71AD14FD29634DAA00C2E90B /* TaxiRideTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AD14FC29634DAA00C2E90B /* TaxiRideTableViewCellModel.swift */; };
@@ -47,6 +48,7 @@
 
 /* Begin PBXFileReference section */
 		713E793F2965B20700F9653C /* HeightOfTableViewRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeightOfTableViewRow.swift; sourceTree = "<group>"; };
+		713E794629661D0000F9653C /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		71AD14F829633A4100C2E90B /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		71AD14FA29634A2800C2E90B /* TaxiRideTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaxiRideTableViewCell.swift; sourceTree = "<group>"; };
 		71AD14FC29634DAA00C2E90B /* TaxiRideTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaxiRideTableViewCellModel.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				71C720142962139E00264F36 /* NetworkManager.swift */,
+				713E794629661D0000F9653C /* DataManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				713E79402965B20700F9653C /* HeightOfTableViewRow.swift in Sources */,
 				71AD14F929633A4200C2E90B /* MainViewModel.swift in Sources */,
 				71C71FEC296212E700264F36 /* RoxieTestTask.xcdatamodeld in Sources */,
+				713E794729661D0000F9653C /* DataManager.swift in Sources */,
 				71FCC28829647A1300B8F027 /* DetailImageTableViewCell.swift in Sources */,
 				71C71FE6296212E700264F36 /* MainViewController.swift in Sources */,
 				71AD14FB29634A2800C2E90B /* TaxiRideTableViewCell.swift in Sources */,
