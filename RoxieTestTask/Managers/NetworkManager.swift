@@ -24,12 +24,10 @@ class NetworkManager {
             if let data = data, error == nil {
                 print(data)
                 if let decodedData = try? JSONDecoder().decode(Address.self, from: data) {
-                    print(decodedData)
                     completion(.success(decodedData))
                 }
             } else {
                 guard let error = error else { return }
-                print(error)
                 completion(.failure(error))
             }
         }.resume()
@@ -37,7 +35,13 @@ class NetworkManager {
     
     func fetchImage(urlString: String) -> UIImage {
         guard let url = URL(string: urlString) else { return UIImage() }
-        guard let imageData = try? Data(contentsOf: url) else { return UIImage() }
-        return UIImage(data: imageData)!; #warning("remove force unwrapping")
+        if let imageData = try? Data(contentsOf: url) {
+           return UIImage(data: imageData)!
+        }
+        
+        //return UIImage(data: imageData)!; #warning("remove force unwrapping")
+        return UIImage()
     }
+    
+    
 }
