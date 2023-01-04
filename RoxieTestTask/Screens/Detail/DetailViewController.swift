@@ -28,10 +28,15 @@ class DetailViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(DetailImageTableViewCell.self, forCellReuseIdentifier: DetailImageTableViewCell.identifier)
+        
         viewModel = DetailViewModel()
         let fetchedImage = NetworkManager.shared.fetchImage(urlString: "https://www.roxiemobile.ru/careers/test/images/" + (data?.vehicle.photo)!)
-        self.viewModel?.customElements?.append(PhotoElement(image: fetchedImage))
-        
+        let newImage = PhotoElement(image: fetchedImage)
+        let nameDriver = NameElement(nameDriver: (data?.vehicle.driverName)!)
+        tableView.register(PhotoElementCell.self, forCellReuseIdentifier: newImage.type.rawValue) //
+        tableView.register(NameElementCell.self, forCellReuseIdentifier: nameDriver.type.rawValue)
+        self.viewModel?.customElements = [newImage, nameDriver]
+        tableView.reloadData()
         #warning("remove force unwrapping")
 
         //viewModel?.customElements?.append(PhotoElement(image: fetchedImage))
@@ -95,7 +100,7 @@ extension DetailViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        (viewModel?.customElements!.count)!
         //viewModel?.customElements?.count
     }
     

@@ -9,11 +9,11 @@ import Foundation
 import UIKit
 
 protocol DetailViewModelProtocol {
-    var customElements: [CustomElementModel]? { get set }
+    var customElements: [CustomElementModel]! { get set }
 }
 
 class DetailViewModel: DetailViewModelProtocol {
-    var customElements: [CustomElementModel]?
+    var customElements: [CustomElementModel]!
     
     
     
@@ -32,6 +32,12 @@ protocol CustomElementModel: AnyObject {
 protocol CustomElementCell: AnyObject {
     func configure(withModel: CustomElementModel)
 }
+
+
+
+
+
+
 
 class PhotoElement: CustomElementModel {
     var type: CustomElementType { return .photo }
@@ -58,9 +64,7 @@ class PhotoElementCell: UITableViewCell, CustomElementCell {
     func configureUI() {
         carImage.image = model.image
     }
-    
-    
-    
+
     lazy var carImage: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFit
@@ -89,13 +93,60 @@ class PhotoElementCell: UITableViewCell, CustomElementCell {
         
         NSLayoutConstraint.activate(carImageConstraints)
     }
+}
+
+class NameElement: CustomElementModel {
+    var type: CustomElementType { return .nameDriver }
+    var name: String
     
+    init(nameDriver: String) {
+        self.name = nameDriver
+    }
+}
+
+class NameElementCell: UITableViewCell, CustomElementCell {
+    var model: NameElement!
     
+    func configure(withModel elementModel: CustomElementModel) {
+        guard let model = elementModel as? NameElement else {
+            print("Unable to cast model as ProfileElement: \(elementModel)")
+            return
+        }
+        self.model = model
+        
+        configureUI()
+    }
     
+    func configureUI() {
+        nameLabel.text = model.name
+    }
     
+    lazy var nameLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        return label
+    }()
     
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.addSubview(nameLabel)
+    }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
-    
-    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        let labelConstraints = [
+            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+            nameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ]
+        
+        NSLayoutConstraint.activate(labelConstraints)
+    }
 }
