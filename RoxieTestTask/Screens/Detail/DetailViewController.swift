@@ -105,7 +105,7 @@ extension DetailViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return HeightOfTableViewRow.photo.rawValue
+        (viewModel?.customElements[indexPath.row].heightRow.rawValue)!
         /*
         switch indexPath.row {
         case 0: return HeightOfTableViewRow.photo.rawValue

@@ -25,8 +25,16 @@ enum CustomElementType: String {
     case car
 }
 
+enum CustomHeightRow: CGFloat {
+    case photo = 300.0
+    case nameDriver = 100.0
+}
+
+
+
 protocol CustomElementModel: AnyObject {
     var type: CustomElementType { get }
+    var heightRow: CustomHeightRow { get }
 }
 
 protocol CustomElementCell: AnyObject {
@@ -40,6 +48,8 @@ protocol CustomElementCell: AnyObject {
 
 
 class PhotoElement: CustomElementModel {
+    var heightRow: CustomHeightRow { return .photo }
+    
     var type: CustomElementType { return .photo }
     var image: UIImage?
     
@@ -96,6 +106,8 @@ class PhotoElementCell: UITableViewCell, CustomElementCell {
 }
 
 class NameElement: CustomElementModel {
+    var heightRow: CustomHeightRow { return .nameDriver }
+    
     var type: CustomElementType { return .nameDriver }
     var name: String
     
