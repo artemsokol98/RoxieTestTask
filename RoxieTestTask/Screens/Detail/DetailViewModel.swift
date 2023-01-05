@@ -9,11 +9,11 @@ import Foundation
 import UIKit
 
 protocol DetailViewModelProtocol {
-    var customElements: [CustomElementModel]! { get set }
+    var customElements: [CustomElementModel] { get set }
 }
 
 class DetailViewModel: DetailViewModelProtocol {
-    var customElements: [CustomElementModel]!
+    var customElements: [CustomElementModel] = [CustomElementModel]()
     
     
     

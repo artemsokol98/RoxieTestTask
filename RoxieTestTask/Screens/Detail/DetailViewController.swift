@@ -11,6 +11,7 @@ class DetailViewController: UIViewController {
     
     var data: AddressElement?
     var viewModel: DetailViewModelProtocol?
+    var fetchedImage: Data!
     /*
     lazy var carImage: UIImageView = {
         let image = UIImageView()
@@ -30,7 +31,13 @@ class DetailViewController: UIViewController {
         tableView.register(DetailImageTableViewCell.self, forCellReuseIdentifier: DetailImageTableViewCell.identifier)
         
         viewModel = DetailViewModel()
-        guard let fetchedImage = DataManager.shared.getImage(urlString: "https://www.roxiemobile.ru/careers/test/images/" + (data?.vehicle.photo)!) else { print("error"); return }  // NetworkManager.shared.fetchImage(urlString: "https://www.roxiemobile.ru/careers/test/images/" + (data?.vehicle.photo)!)
+        
+        DispatchQueue.main.async {
+            self.downloadImage { data in
+                self.fetchedImage = data
+            }
+        }
+         // NetworkManager.shared.fetchImage(urlString: "https://www.roxiemobile.ru/careers/test/images/" + (data?.vehicle.photo)!)
         let newImage = PhotoElement(image: fetchedImage, apiString: "https://www.roxiemobile.ru/careers/test/images/" + (data?.vehicle.photo)!)
         let nameDriver = NameElement(nameDriver: (data?.vehicle.driverName)!)
         tableView.register(PhotoElementCell.self, forCellReuseIdentifier: newImage.type.rawValue) //
@@ -77,6 +84,11 @@ class DetailViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func downloadImage(completion: @escaping (Data) -> Void) {
+        guard let fetchedImage = DataManager.shared.getImage(urlString: "https://www.roxiemobile.ru/careers/test/images/" + (self.data?.vehicle.photo)!) else { print("error"); return }
+        completion(fetchedImage)
+    }
 
 }
 
@@ -92,7 +104,7 @@ extension DetailViewController: UITableViewDataSource {
         cell.configureCell(image: fetchedImage)
         return cell
          */
-        let cellModel = viewModel?.customElements?[indexPath.row]
+        let cellModel = viewModel?.customElements[indexPath.row]
         let cellIdentifier = cellModel?.type.rawValue
         let customCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier!, for: indexPath) as! CustomElementCell;  #warning("remove force unwrapping")
         customCell.configure(withModel: cellModel!)
@@ -100,7 +112,7 @@ extension DetailViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        (viewModel?.customElements!.count)!
+        (viewModel?.customElements.count)!
         //viewModel?.customElements?.count
     }
     

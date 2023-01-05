@@ -54,7 +54,7 @@ class DataManager {
             if image == nil { throw CoreDataErrors.CouldntFetchFromEntity } //CoreDataErrors.CouldntFetchFromEntity
         } catch {
             image = NetworkManager.shared.fetchImage(urlString: urlString)
-            createNewItemImage(apiString: urlString, image: image)
+            self.createNewItemImage(apiString: urlString, image: image)
         }
         return image
     }
