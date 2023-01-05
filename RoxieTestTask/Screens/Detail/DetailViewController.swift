@@ -30,8 +30,8 @@ class DetailViewController: UIViewController {
         tableView.register(DetailImageTableViewCell.self, forCellReuseIdentifier: DetailImageTableViewCell.identifier)
         
         viewModel = DetailViewModel()
-        let fetchedImage = NetworkManager.shared.fetchImage(urlString: "https://www.roxiemobile.ru/careers/test/images/" + (data?.vehicle.photo)!)
-        let newImage = PhotoElement(image: fetchedImage)
+        guard let fetchedImage = DataManager.shared.getImage(urlString: "https://www.roxiemobile.ru/careers/test/images/" + (data?.vehicle.photo)!) else { print("error"); return }  // NetworkManager.shared.fetchImage(urlString: "https://www.roxiemobile.ru/careers/test/images/" + (data?.vehicle.photo)!)
+        let newImage = PhotoElement(image: fetchedImage, apiString: "https://www.roxiemobile.ru/careers/test/images/" + (data?.vehicle.photo)!)
         let nameDriver = NameElement(nameDriver: (data?.vehicle.driverName)!)
         tableView.register(PhotoElementCell.self, forCellReuseIdentifier: newImage.type.rawValue) //
         tableView.register(NameElementCell.self, forCellReuseIdentifier: nameDriver.type.rawValue)

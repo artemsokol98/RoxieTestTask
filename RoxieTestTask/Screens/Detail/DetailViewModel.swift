@@ -51,10 +51,12 @@ class PhotoElement: CustomElementModel {
     var heightRow: CustomHeightRow { return .photo }
     
     var type: CustomElementType { return .photo }
-    var image: UIImage?
+    var image: Data
+    var apiString: String
     
-    init(image: UIImage?) {
+    init(image: Data, apiString: String) {
         self.image = image
+        self.apiString = apiString
     }
 }
 
@@ -72,7 +74,7 @@ class PhotoElementCell: UITableViewCell, CustomElementCell {
     }
     
     func configureUI() {
-        carImage.image = model.image
+        carImage.image = UIImage(data: model.image) 
     }
 
     lazy var carImage: UIImageView = {
