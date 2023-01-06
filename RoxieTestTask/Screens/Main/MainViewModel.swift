@@ -23,11 +23,15 @@ class MainViewModel: MainViewModelProtocol {
         NetworkManager.shared.downloadData { result in
             switch result {
             case .success(let address):
-                self.taxiRide = address
-                self.parsedTaxiRide = self.parseRidesForTableViewCell(inputData: address)
-                completion(.success(()))
+                DispatchQueue.main.async {
+                    self.taxiRide = address
+                    self.parsedTaxiRide = self.parseRidesForTableViewCell(inputData: address)
+                    completion(.success(()))
+                }
             case .failure(let error):
-                completion(.failure(error))
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
             }
         }
     }

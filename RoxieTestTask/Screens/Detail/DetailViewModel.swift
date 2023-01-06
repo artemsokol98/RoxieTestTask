@@ -13,7 +13,7 @@ protocol DetailViewModelProtocol {
 }
 
 class DetailViewModel: DetailViewModelProtocol {
-    var customElements: [CustomElementModel] = [CustomElementModel]()
+    var customElements: [CustomElementModel] = [PhotoElement(image: nil, apiString: nil), NameElement(nameDriver: nil)]
     
     
     
@@ -38,29 +38,28 @@ protocol CustomElementModel: AnyObject {
 }
 
 protocol CustomElementCell: AnyObject {
+    static var identifier: String { get }
     func configure(withModel: CustomElementModel)
 }
-
-
-
-
-
 
 
 class PhotoElement: CustomElementModel {
     var heightRow: CustomHeightRow { return .photo }
     
     var type: CustomElementType { return .photo }
-    var image: Data
-    var apiString: String
+    var image: Data?
+    var apiString: String?
     
-    init(image: Data, apiString: String) {
+    init(image: Data?, apiString: String?) {
         self.image = image
         self.apiString = apiString
     }
 }
 
 class PhotoElementCell: UITableViewCell, CustomElementCell {
+    
+    static var identifier = "PhotoElement"
+    
     var model: PhotoElement!
     
     func configure(withModel elementModel: CustomElementModel) {
@@ -74,7 +73,9 @@ class PhotoElementCell: UITableViewCell, CustomElementCell {
     }
     
     func configureUI() {
-        carImage.image = UIImage(data: model.image) 
+        if let unwrappedImage = model.image {
+            carImage.image = UIImage(data: unwrappedImage)
+        }
     }
 
     lazy var carImage: UIImageView = {
@@ -111,14 +112,16 @@ class NameElement: CustomElementModel {
     var heightRow: CustomHeightRow { return .nameDriver }
     
     var type: CustomElementType { return .nameDriver }
-    var name: String
+    var name: String?
     
-    init(nameDriver: String) {
+    init(nameDriver: String?) {
         self.name = nameDriver
     }
 }
 
 class NameElementCell: UITableViewCell, CustomElementCell {
+    static var identifier = "NameElementCell"
+    
     var model: NameElement!
     
     func configure(withModel elementModel: CustomElementModel) {

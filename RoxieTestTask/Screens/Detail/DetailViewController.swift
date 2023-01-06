@@ -18,6 +18,7 @@ class DetailViewController: UIViewController {
         return image
     }()
     */
+    let spinner = UIActivityIndicatorView(style: .large)
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -26,28 +27,41 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = DetailViewModel()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(DetailImageTableViewCell.self, forCellReuseIdentifier: DetailImageTableViewCell.identifier)
-        
-        viewModel = DetailViewModel()
-        
-        DispatchQueue.main.async {
-            self.downloadImage { data in
-                self.fetchedImage = data
-            }
-        }
+        tableView.backgroundView = spinner
+        spinner.startAnimating()
+        tableView.register(PhotoElementCell.self, forCellReuseIdentifier: (viewModel?.customElements[0].type.rawValue)!)
+        tableView.register(NameElementCell.self, forCellReuseIdentifier: (viewModel?.customElements[1].type.rawValue)!)
+        sendRequest()
+        //tableView.register(DetailImageTableViewCell.self, forCellReuseIdentifier: DetailImageTableViewCell.identifier)
+       
+
          // NetworkManager.shared.fetchImage(urlString: "https://www.roxiemobile.ru/careers/test/images/" + (data?.vehicle.photo)!)
-        let newImage = PhotoElement(image: fetchedImage, apiString: "https://www.roxiemobile.ru/careers/test/images/" + (data?.vehicle.photo)!)
-        let nameDriver = NameElement(nameDriver: (data?.vehicle.driverName)!)
-        tableView.register(PhotoElementCell.self, forCellReuseIdentifier: newImage.type.rawValue) //
-        tableView.register(NameElementCell.self, forCellReuseIdentifier: nameDriver.type.rawValue)
-        self.viewModel?.customElements = [newImage, nameDriver]
-        tableView.reloadData()
+        
         #warning("remove force unwrapping")
 
         //viewModel?.customElements?.append(PhotoElement(image: fetchedImage))
         
+    }
+    
+    func sendRequest() {
+        self.downloadImage { data in
+            self.spinner.stopAnimating()
+            self.fetchedImage = data
+            let nameDriver = NameElement(nameDriver: (self.data?.vehicle.driverName)!)
+            let newImage = PhotoElement(image: self.fetchedImage, apiString: "https://www.roxiemobile.ru/careers/test/images/" + (self.data?.vehicle.photo)!)
+            
+            self.viewModel?.customElements = [newImage, nameDriver]
+            self.tableView.reloadData()
+        }
+    }
+    
+    func downloadImage(completion: @escaping (Data) -> Void) {
+        print("image downloading...")
+        guard let fetchedImage = DataManager.shared.getImage(urlString: "https://www.roxiemobile.ru/careers/test/images/" + (self.data?.vehicle.photo)!) else { print("error"); return }
+        completion(fetchedImage)
     }
     
     override func viewDidLayoutSubviews() {
@@ -85,10 +99,7 @@ class DetailViewController: UIViewController {
     }
     */
     
-    func downloadImage(completion: @escaping (Data) -> Void) {
-        guard let fetchedImage = DataManager.shared.getImage(urlString: "https://www.roxiemobile.ru/careers/test/images/" + (self.data?.vehicle.photo)!) else { print("error"); return }
-        completion(fetchedImage)
-    }
+    
 
 }
 

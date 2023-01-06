@@ -53,8 +53,17 @@ class DataManager {
             image = try? fetchDataFromCache(urlString: urlString)
             if image == nil { throw CoreDataErrors.CouldntFetchFromEntity } //CoreDataErrors.CouldntFetchFromEntity
         } catch {
-            image = NetworkManager.shared.fetchImage(urlString: urlString)
-            self.createNewItemImage(apiString: urlString, image: image)
+            DispatchQueue.main.async {
+                NetworkManager.shared.fetchImageAsync(urlString: urlString) { result in
+                    switch result {
+                    case .success(let data):
+                        image = data
+                        self.createNewItemImage(apiString: urlString, image: image)
+                    case .failure(let error):
+                        print(error)
+                    }
+                }//fetchImage(urlString: urlString)
+            }
         }
         return image
     }
