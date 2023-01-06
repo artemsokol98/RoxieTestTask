@@ -43,7 +43,7 @@ class MainViewModel: MainViewModelProtocol {
                 startAddress: item.startAddress.address,
                 endAddress: item.endAddress.address,
                 dateRide: item.orderTime,
-                costRide: item.price.currency
+                costRide: "\(item.price.amount / 100)"+" "+"\(item.price.currency)"
             )
             parsedTaxiRide.append(taxiRide)
         }

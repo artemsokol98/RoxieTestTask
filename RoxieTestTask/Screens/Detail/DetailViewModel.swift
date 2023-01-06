@@ -8,13 +8,28 @@
 import Foundation
 import UIKit
 
+struct CollectionViewCellModel {
+    let label: String
+}
+
 protocol DetailViewModelProtocol {
     var customElements: [CustomElementModel] { get set }
+    func parseForCollectionView(data: AddressElement) -> [String]
 }
 
 class DetailViewModel: DetailViewModelProtocol {
-    var customElements: [CustomElementModel] = [PhotoElement(image: nil, apiString: nil), NameElement(nameDriver: nil)]
+    var customElements: [CustomElementModel] = [PhotoElement(image: nil, apiString: nil), NameElement(nameDriver: nil, arrayOfCells: nil)]
     
+    func parseForCollectionView(data: AddressElement) -> [String] {
+        var arrayOfCells = [String]()
+        arrayOfCells.append(data.vehicle.modelName)
+        arrayOfCells.append(data.vehicle.driverName)
+        arrayOfCells.append(data.vehicle.regNumber)
+        arrayOfCells.append(data.orderTime)
+        arrayOfCells.append(data.startAddress.address)
+        arrayOfCells.append(data.endAddress.address)
+        return arrayOfCells
+    }
     
     
 }
@@ -27,7 +42,7 @@ enum CustomElementType: String {
 
 enum CustomHeightRow: CGFloat {
     case photo = 300.0
-    case nameDriver = 100.0
+    case nameDriver = 700.0
 }
 
 
@@ -113,9 +128,11 @@ class NameElement: CustomElementModel {
     
     var type: CustomElementType { return .nameDriver }
     var name: String?
+    var arrayForCells: [String]?
     
-    init(nameDriver: String?) {
+    init(nameDriver: String?, arrayOfCells: [String]?) {
         self.name = nameDriver
+        self.arrayForCells = arrayOfCells
     }
 }
 
@@ -135,18 +152,31 @@ class NameElementCell: UITableViewCell, CustomElementCell {
     }
     
     func configureUI() {
-        nameLabel.text = model.name
+        //nameLabel.text = model.name
+        collectionView.reloadData()
     }
     
+    
+    lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
+        let collectionView = UICollectionView(frame: .infinite, collectionViewLayout: layout)
+        collectionView.register(DetailInfoCollectionViewCell.self, forCellWithReuseIdentifier: DetailInfoCollectionViewCell.identifier)
+        return collectionView
+    }()
+    /*
     lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         return label
     }()
-    
+    */
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(nameLabel)
+        //contentView.addSubview(nameLabel)
+        contentView.addSubview(collectionView)
+        collectionView.delegate = self
+        collectionView.dataSource = self
     }
     
     required init?(coder: NSCoder) {
@@ -155,6 +185,7 @@ class NameElementCell: UITableViewCell, CustomElementCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        /*
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         
         let labelConstraints = [
@@ -165,5 +196,44 @@ class NameElementCell: UITableViewCell, CustomElementCell {
         ]
         
         NSLayoutConstraint.activate(labelConstraints)
+         */
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let collectionViewConstraints = [
+            collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            collectionView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ]
+        
+        NSLayoutConstraint.activate(collectionViewConstraints)
+    }
+
+}
+
+// MARK: - Collection View
+
+extension NameElementCell: UICollectionViewDelegate {
+    
+}
+
+extension NameElementCell: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        model.arrayForCells?.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailInfoCollectionViewCell.identifier, for: indexPath) as? DetailInfoCollectionViewCell else { print("error in collectionView cell"); return UICollectionViewCell() }
+        cell.configureCell(string: (model.arrayForCells?[indexPath.item])!)
+        return cell
+    }
+    
+    
+}
+
+extension NameElementCell: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width: CGFloat = contentView.frame.size.width * 0.4
+        return CGSize(width: width, height: width)
     }
 }

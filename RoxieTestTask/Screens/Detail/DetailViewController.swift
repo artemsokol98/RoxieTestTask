@@ -48,20 +48,27 @@ class DetailViewController: UIViewController {
     
     func sendRequest() {
         self.downloadImage { data in
-            self.spinner.stopAnimating()
-            self.fetchedImage = data
-            let nameDriver = NameElement(nameDriver: (self.data?.vehicle.driverName)!)
-            let newImage = PhotoElement(image: self.fetchedImage, apiString: "https://www.roxiemobile.ru/careers/test/images/" + (self.data?.vehicle.photo)!)
-            
-            self.viewModel?.customElements = [newImage, nameDriver]
-            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                self.spinner.stopAnimating()
+                self.fetchedImage = data
+                guard let dataForArrayOfCells = self.data else { return }
+                let nameDriver = NameElement(nameDriver: (self.data?.vehicle.driverName)!, arrayOfCells: self.viewModel?.parseForCollectionView(data: dataForArrayOfCells))
+                let newImage = PhotoElement(image: self.fetchedImage, apiString: "https://www.roxiemobile.ru/careers/test/images/" + (self.data?.vehicle.photo)!)
+                self.viewModel?.customElements = [newImage, nameDriver]
+                self.tableView.reloadData()
+            }
         }
     }
     
     func downloadImage(completion: @escaping (Data) -> Void) {
         print("image downloading...")
-        guard let fetchedImage = DataManager.shared.getImage(urlString: "https://www.roxiemobile.ru/careers/test/images/" + (self.data?.vehicle.photo)!) else { print("error"); return }
-        completion(fetchedImage)
+        DataManager.shared.getImage(urlString: "https://www.roxiemobile.ru/careers/test/images/" + (self.data?.vehicle.photo)!) { image in
+            guard let image = image else {
+                return
+            }
+            completion(image)
+        }//else { print("error"); return }
+        
     }
     
     override func viewDidLayoutSubviews() {

@@ -47,25 +47,25 @@ class DataManager {
     }
     
     
-    func getImage(urlString: String) -> Data? {
+    func getImage(urlString: String, completion: @escaping (Data?) -> Void) {
         var image: Data?
         do {
             image = try? fetchDataFromCache(urlString: urlString)
-            if image == nil { throw CoreDataErrors.CouldntFetchFromEntity } //CoreDataErrors.CouldntFetchFromEntity
+            if image == nil { throw CoreDataErrors.CouldntFetchFromEntity }
+            completion(image)//CoreDataErrors.CouldntFetchFromEntity
         } catch {
-            DispatchQueue.main.async {
-                NetworkManager.shared.fetchImageAsync(urlString: urlString) { result in
-                    switch result {
-                    case .success(let data):
-                        image = data
-                        self.createNewItemImage(apiString: urlString, image: image)
-                    case .failure(let error):
-                        print(error)
-                    }
-                }//fetchImage(urlString: urlString)
+            NetworkManager.shared.fetchImageAsync(urlString: urlString) { result in
+                switch result {
+                case .success(let data):
+                    image = data
+                    self.createNewItemImage(apiString: urlString, image: image)
+                    completion(image)
+                case .failure(let error):
+                    print(error)
+                    completion(nil)
+                }
             }
         }
-        return image
     }
 }
 
