@@ -15,23 +15,46 @@ class MainViewController: UIViewController {
         return tableView
     }()
     
+    let spinner = UIActivityIndicatorView(style: .large)
+    
     var viewModel: MainViewModelProtocol!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.backgroundView = spinner
         tableView.delegate = self
         tableView.dataSource = self
         viewModel = MainViewModel()
-        viewModel.fetchData(completion: { result in
+        sendRequest()
+    }
+    
+    private func sendRequest() {
+        spinner.startAnimating()
+        viewModel.fetchData(completion: { [weak self] result in
             DispatchQueue.main.async {
+                self?.spinner.stopAnimating()
                 switch result {
                 case .success():
-                    self.tableView.reloadData()
+                    self?.tableView.reloadData()
                 case .failure(let error):
                     print(error)
+                    self?.showAlert(title: "Error", message: "Failed loading")
                 }
             }
         })
+    }
+    
+    private func showAlert(title: String, message: String) {
+        let action = UIAlertAction(title: "Try again", style: .default) { _ in
+            self.sendRequest()
+        }
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(action)
+        present(alert, animated: true)
     }
     
     override func viewDidLayoutSubviews() {

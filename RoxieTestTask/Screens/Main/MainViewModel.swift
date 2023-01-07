@@ -22,8 +22,9 @@ class MainViewModel: MainViewModelProtocol {
     func fetchData(completion: @escaping (Result<Void, Error>) -> Void) {
         NetworkManager.shared.downloadData { result in
             switch result {
-            case .success(let address):
+            case .success(var address):
                 DispatchQueue.main.async {
+                    address.sort(by: {$0.orderTime.compare($1.orderTime) == .orderedDescending})
                     self.taxiRide = address
                     self.parsedTaxiRide = self.parseRidesForTableViewCell(inputData: address)
                     completion(.success(()))
@@ -38,15 +39,46 @@ class MainViewModel: MainViewModelProtocol {
     
     func parseRidesForTableViewCell(inputData: [AddressElement]) -> [TaxiRideTableViewCellModel] {
         var parsedTaxiRide = [TaxiRideTableViewCellModel]()
+        //inputData.sort(by: {$0.orderTime.compare($1.orderTime) == .orderedDescending})
         for item in inputData {
+            let dateRideWithoutTime = dateConverter(dateString: item.orderTime)
             let taxiRide = TaxiRideTableViewCellModel(
                 startAddress: item.startAddress.address,
                 endAddress: item.endAddress.address,
-                dateRide: item.orderTime,
-                costRide: "\(item.price.amount / 100)"+" "+"\(item.price.currency)"
+                dateRide: dateRideWithoutTime,
+                costRide: "\(item.price.amount / 100),\(item.price.amount % 100)"+" "+"\(item.price.currency)"
             )
             parsedTaxiRide.append(taxiRide)
         }
         return parsedTaxiRide
     }
+    
+    func dateConverter(dateString: String) -> String {
+        
+        let dateFormatterISO8601 = ISO8601DateFormatter()
+        
+       // dateFormatterISO8601.timeZone = TimeZone(identifier: "Europe/London")
+      //  dateFormatterISO8601.formatOptions = [.withMonth, .withDay, .withTime, .withDashSeparatorInDate, .withColonSeparatorInTime]
+        let dateString = dateFormatterISO8601.date(from: dateString)! //.date(from: dateString)
+        
+        print(dateString)
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = .none
+        dateFormatter.dateStyle = .long
+        
+        let date = dateFormatter.string(from: dateString)
+        print(dateFormatter.string(from: dateString))
+        
+        return date
+//        let timeZone = TimeZone.current
+//        print(timeZone)
+        /*
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = .full
+        let dateString = dateFormatter.date(from: dateString)
+        print(dateString)
+        */
+    }
+    
 }

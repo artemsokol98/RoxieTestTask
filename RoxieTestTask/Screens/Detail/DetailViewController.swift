@@ -31,7 +31,7 @@ class DetailViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundView = spinner
-        spinner.startAnimating()
+        
         tableView.register(PhotoElementCell.self, forCellReuseIdentifier: (viewModel?.customElements[0].type.rawValue)!)
         tableView.register(NameElementCell.self, forCellReuseIdentifier: (viewModel?.customElements[1].type.rawValue)!)
         sendRequest()
@@ -47,6 +47,7 @@ class DetailViewController: UIViewController {
     }
     
     func sendRequest() {
+        spinner.startAnimating()
         self.downloadImage { data in
             DispatchQueue.main.async {
                 self.spinner.stopAnimating()

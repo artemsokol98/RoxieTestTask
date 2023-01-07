@@ -22,13 +22,29 @@ class DetailViewModel: DetailViewModelProtocol {
     
     func parseForCollectionView(data: AddressElement) -> [String] {
         var arrayOfCells = [String]()
+        arrayOfCells.append(data.startAddress.address)
+        arrayOfCells.append(data.endAddress.address)
         arrayOfCells.append(data.vehicle.modelName)
         arrayOfCells.append(data.vehicle.driverName)
         arrayOfCells.append(data.vehicle.regNumber)
-        arrayOfCells.append(data.orderTime)
-        arrayOfCells.append(data.startAddress.address)
-        arrayOfCells.append(data.endAddress.address)
+        arrayOfCells.append(dateConverter(dateString: data.orderTime))
+//        arrayOfCells.append(data.startAddress.address)
+//        arrayOfCells.append(data.endAddress.address)
         return arrayOfCells
+    }
+    
+    func dateConverter(dateString: String) -> String {
+        let dateFormatterISO8601 = ISO8601DateFormatter()
+        let dateString = dateFormatterISO8601.date(from: dateString)!
+        let dateFormatter = DateFormatter()
+        //dateFormatter.timeStyle = .short
+        dateFormatter.dateFormat = "d MMM yyyy HH:mm"//"HH:mm"
+        
+        
+        //dateFormatter.dateStyle = .
+        //dateFormatter.timeZone = .none
+        let date = dateFormatter.string(from: dateString)
+        return date
     }
     
     
