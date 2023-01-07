@@ -13,13 +13,17 @@ class DetailInfoCollectionViewCell: UICollectionViewCell {
     
     lazy var label: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .red
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        //label.backgroundColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0)
         return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(label)
+        contentView.backgroundColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0)
+        contentView.layer.cornerRadius = contentView.bounds.width * 0.2
     }
     
     required init?(coder: NSCoder) {

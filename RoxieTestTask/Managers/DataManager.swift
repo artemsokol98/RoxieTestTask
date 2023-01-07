@@ -15,9 +15,9 @@ class DataManager {
     
     func createNewItemImage(apiString: String, image: Data?) {
         let newItem = ImageCache(context: context)
-        newItem.image = image // here need imageData instead UIImage
+        newItem.image = image
         newItem.id = apiString
-        newItem.date = Date().timeIntervalSinceReferenceDate //double
+        newItem.date = Date().timeIntervalSinceReferenceDate 
         do {
             try context.save()
         } catch {
