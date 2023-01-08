@@ -115,7 +115,6 @@ class TaxiRideTableViewCell: UITableViewCell {
             leftVerticalStackView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -contentView.bounds.width * 0.5)
         ]
         
-        
         NSLayoutConstraint.activate(constraints)
         NSLayoutConstraint.activate(leftConstraints)
     }

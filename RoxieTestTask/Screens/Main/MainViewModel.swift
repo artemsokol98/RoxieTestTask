@@ -39,7 +39,6 @@ class MainViewModel: MainViewModelProtocol {
     
     func parseRidesForTableViewCell(inputData: [AddressElement]) -> [TaxiRideTableViewCellModel] {
         var parsedTaxiRide = [TaxiRideTableViewCellModel]()
-        //inputData.sort(by: {$0.orderTime.compare($1.orderTime) == .orderedDescending})
         for item in inputData {
             let dateRideWithoutTime = dateConverter(dateString: item.orderTime)
             let taxiRide = TaxiRideTableViewCellModel(
@@ -54,31 +53,13 @@ class MainViewModel: MainViewModelProtocol {
     }
     
     func dateConverter(dateString: String) -> String {
-        
         let dateFormatterISO8601 = ISO8601DateFormatter()
-        
-       // dateFormatterISO8601.timeZone = TimeZone(identifier: "Europe/London")
-      //  dateFormatterISO8601.formatOptions = [.withMonth, .withDay, .withTime, .withDashSeparatorInDate, .withColonSeparatorInTime]
         let dateString = dateFormatterISO8601.date(from: dateString)! //.date(from: dateString)
-        
-        print(dateString)
-        
         let dateFormatter = DateFormatter()
         dateFormatter.timeStyle = .none
         dateFormatter.dateStyle = .long
-        
         let date = dateFormatter.string(from: dateString)
-        print(dateFormatter.string(from: dateString))
-        
         return date
-//        let timeZone = TimeZone.current
-//        print(timeZone)
-        /*
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeStyle = .full
-        let dateString = dateFormatter.date(from: dateString)
-        print(dateString)
-        */
     }
     
 }

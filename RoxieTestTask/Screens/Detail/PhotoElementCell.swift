@@ -1,16 +1,34 @@
 //
-//  DetailImageTableViewCell.swift
+//  PhotoElementCell.swift
 //  RoxieTestTask
 //
-//  Created by Артем Соколовский on 03.01.2023.
+//  Created by Артем Соколовский on 08.01.2023.
 //
 
 import UIKit
 
-class DetailImageTableViewCell: UITableViewCell {
+class PhotoElementCell: UITableViewCell, CustomElementCell {
     
-    static let identifier = "DetailImageIdentifier"
+    static var identifier = "PhotoElement"
     
+    var model: PhotoElement!
+    
+    func configure(withModel elementModel: CustomElementModel) {
+        guard let model = elementModel as? PhotoElement else {
+            print("Unable to cast model as ProfileElement: \(elementModel)")
+            return
+        }
+        self.model = model
+        
+        configureUI()
+    }
+    
+    func configureUI() {
+        if let unwrappedImage = model.image {
+            carImage.image = UIImage(data: unwrappedImage)
+        }
+    }
+
     lazy var carImage: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFit
@@ -29,6 +47,8 @@ class DetailImageTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
+        carImage.layer.cornerRadius = contentView.bounds.width * 0.2
         carImage.translatesAutoresizingMaskIntoConstraints = false
         
         let carImageConstraints = [
@@ -40,9 +60,4 @@ class DetailImageTableViewCell: UITableViewCell {
         
         NSLayoutConstraint.activate(carImageConstraints)
     }
-    
-    func configureCell(image: UIImage) {
-        carImage.image = image
-    }
-    
 }
