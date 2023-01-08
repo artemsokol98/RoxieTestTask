@@ -18,6 +18,14 @@ class DetailViewController: UIViewController {
         return image
     }()
     */
+    var heightOfPhoto: (_ height: CGFloat) -> CGFloat = { (height: CGFloat) in
+        return height * 0.5
+    }
+    
+    let heightOfOneRowCollectionWithInfo: (CGFloat) -> CGFloat = { (width: CGFloat) in
+        return width * 1.15
+    }
+    
     let spinner = UIActivityIndicatorView(style: .large)
     
     lazy var tableView: UITableView = {
@@ -137,7 +145,14 @@ extension DetailViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        (viewModel?.customElements[indexPath.row].heightRow.rawValue)!
+        switch indexPath.row {
+        case 0: return heightOfPhoto(view.bounds.height)
+        case 1: return heightOfOneRowCollectionWithInfo(view.bounds.width) * CGFloat(((viewModel?.customElements.count)! / 2))
+        default: print("another row")
+        }
+        return CGFloat()
+        
+        //(viewModel?.customElements[indexPath.row].heightRow.rawValue)!
         /*
         switch indexPath.row {
         case 0: return HeightOfTableViewRow.photo.rawValue
