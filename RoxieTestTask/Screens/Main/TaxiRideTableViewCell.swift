@@ -8,10 +8,39 @@
 import UIKit
 
 class TaxiRideTableViewCell: UITableViewCell {
-    
+
     static let identifier = "TaxiRideIdentifier"
     
-    private lazy var verticalStackView: UIStackView = {
+    private lazy var leftVerticalStackView: UIStackView = {
+        
+        let startAddress = UILabel()
+        startAddress.numberOfLines = 0
+        let endAddress = UILabel()
+        endAddress.numberOfLines = 0
+        let dateRide = UILabel()
+        dateRide.numberOfLines = 0
+        let costRide = UILabel()
+        costRide.numberOfLines = 0
+        
+        let stackView = UIStackView()
+        startAddress.text = "Начальный адрес"
+        stackView.addArrangedSubview(startAddress)
+        endAddress.text = "Конечный адрес"
+        stackView.addArrangedSubview(endAddress)
+        dateRide.text = "Дата поездки"
+        stackView.addArrangedSubview(dateRide)
+        costRide.text = "Стоимость поездки"
+        stackView.addArrangedSubview(costRide)
+        
+        return stackView
+    }()
+    
+    private lazy var generalLabel: UILabel = {
+        let label = UILabel()
+        return label
+    }()
+    
+    private lazy var rightVerticalStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.addArrangedSubview(startAddress)
         stackView.addArrangedSubview(endAddress)
@@ -22,29 +51,34 @@ class TaxiRideTableViewCell: UITableViewCell {
     
     private lazy var startAddress: UILabel = {
         let label = UILabel()
+        label.numberOfLines = 0
         return label
     }()
     
     private lazy var endAddress: UILabel = {
         let label = UILabel()
+        label.numberOfLines = 0
         return label
     }()
     
     private lazy var dateRide: UILabel = {
         let label = UILabel()
+        label.numberOfLines = 0
         return label
     }()
     
     private lazy var costRide: UILabel = {
         let label = UILabel()
+        label.numberOfLines = 0
         return label
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(verticalStackView)
+        contentView.addSubview(rightVerticalStackView)
+        contentView.addSubview(leftVerticalStackView)
         contentView.layer.cornerRadius = 10
-        contentView.backgroundColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
+        contentView.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 0.5, alpha: 1)
     }
     
     required init?(coder: NSCoder) {
@@ -54,19 +88,36 @@ class TaxiRideTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 30, left: 30, bottom: 30, right: 30))
-        verticalStackView.frame = contentView.bounds
-        verticalStackView.axis = .vertical
-        verticalStackView.alignment = .center
-        verticalStackView.distribution = .fillEqually
-        verticalStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        leftVerticalStackView.frame = contentView.bounds
+        leftVerticalStackView.axis = .vertical
+        leftVerticalStackView.alignment = .leading
+        leftVerticalStackView.distribution = .fillEqually
+        leftVerticalStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        rightVerticalStackView.frame = contentView.bounds
+        rightVerticalStackView.axis = .vertical
+        rightVerticalStackView.alignment = .trailing
+        rightVerticalStackView.distribution = .fillEqually
+        rightVerticalStackView.translatesAutoresizingMaskIntoConstraints = false
         
         let constraints = [
-            verticalStackView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor),
-            verticalStackView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor),
-            verticalStackView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor),
-            verticalStackView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor)
+            rightVerticalStackView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor),
+            rightVerticalStackView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor),
+            rightVerticalStackView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: contentView.bounds.width * 0.5),
+            rightVerticalStackView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -contentView.bounds.width * 0.05)
         ]
+        
+        let leftConstraints = [
+            leftVerticalStackView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor),
+            leftVerticalStackView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor),
+            leftVerticalStackView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: contentView.bounds.width * 0.05),
+            leftVerticalStackView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -contentView.bounds.width * 0.5)
+        ]
+        
+        
         NSLayoutConstraint.activate(constraints)
+        NSLayoutConstraint.activate(leftConstraints)
     }
     
     func configureCell(cellInfo: TaxiRideTableViewCellModel) {
@@ -75,17 +126,4 @@ class TaxiRideTableViewCell: UITableViewCell {
         self.dateRide.text = cellInfo.dateRide
         self.costRide.text = cellInfo.costRide
     }
-    
-/*
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-*/
 }

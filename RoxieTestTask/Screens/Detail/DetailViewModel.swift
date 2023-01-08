@@ -9,27 +9,50 @@ import Foundation
 import UIKit
 
 struct CollectionViewCellModel {
-    let label: String
+    let nameOfCell: String
+    let infoLabel: String
 }
 
 protocol DetailViewModelProtocol {
     var customElements: [CustomElementModel] { get set }
-    func parseForCollectionView(data: AddressElement) -> [String]
+    func parseForCollectionView(data: AddressElement) -> [CollectionViewCellModel]
 }
 
 class DetailViewModel: DetailViewModelProtocol {
     var customElements: [CustomElementModel] = [PhotoElement(image: nil, apiString: nil), NameElement(nameDriver: nil, arrayOfCells: nil)]
     
-    func parseForCollectionView(data: AddressElement) -> [String] {
-        var arrayOfCells = [String]()
-        arrayOfCells.append(data.startAddress.address)
-        arrayOfCells.append(data.endAddress.address)
-        arrayOfCells.append(data.vehicle.modelName)
-        arrayOfCells.append(data.vehicle.driverName)
-        arrayOfCells.append(data.vehicle.regNumber)
-        arrayOfCells.append(dateConverter(dateString: data.orderTime))
-//        arrayOfCells.append(data.startAddress.address)
-//        arrayOfCells.append(data.endAddress.address)
+    func parseForCollectionView(data: AddressElement) -> [CollectionViewCellModel] {
+        var arrayOfCells = [CollectionViewCellModel]()
+        arrayOfCells.append(
+            CollectionViewCellModel(
+                nameOfCell: "Начальный адрес",
+                infoLabel: data.startAddress.address)
+        )
+        arrayOfCells.append(
+            CollectionViewCellModel(
+                nameOfCell: "Конечный адрес",
+                infoLabel: data.endAddress.address)
+        )
+        arrayOfCells.append(
+            CollectionViewCellModel(
+                nameOfCell: "Модель машины",
+                infoLabel: data.vehicle.modelName)
+        )
+        arrayOfCells.append(
+            CollectionViewCellModel(
+                nameOfCell: "Имя водителя",
+                infoLabel: data.vehicle.driverName)
+        )
+        arrayOfCells.append(
+            CollectionViewCellModel(
+                nameOfCell: "Номер машины",
+                infoLabel: data.vehicle.regNumber)
+        )
+        arrayOfCells.append(
+            CollectionViewCellModel(
+                nameOfCell: "Время поездки",
+                infoLabel: dateConverter(dateString: data.orderTime))
+        )
         return arrayOfCells
     }
     
@@ -39,8 +62,6 @@ class DetailViewModel: DetailViewModelProtocol {
         let dateFormatter = DateFormatter()
         //dateFormatter.timeStyle = .short
         dateFormatter.dateFormat = "d MMM yyyy HH:mm"//"HH:mm"
-        
-        
         //dateFormatter.dateStyle = .
         //dateFormatter.timeZone = .none
         let date = dateFormatter.string(from: dateString)
@@ -112,12 +133,14 @@ class PhotoElementCell: UITableViewCell, CustomElementCell {
     lazy var carImage: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFit
+        //image.layer.cornerRadius = contentView.bounds.width * 0.2
         return image
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(carImage)
+        
     }
     
     required init?(coder: NSCoder) {
@@ -126,6 +149,8 @@ class PhotoElementCell: UITableViewCell, CustomElementCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
+        carImage.layer.cornerRadius = contentView.bounds.width * 0.2
         carImage.translatesAutoresizingMaskIntoConstraints = false
         
         let carImageConstraints = [
@@ -144,9 +169,9 @@ class NameElement: CustomElementModel {
     
     var type: CustomElementType { return .nameDriver }
     var name: String?
-    var arrayForCells: [String]?
+    var arrayForCells: [CollectionViewCellModel]?
     
-    init(nameDriver: String?, arrayOfCells: [String]?) {
+    init(nameDriver: String?, arrayOfCells: [CollectionViewCellModel]?) {
         self.name = nameDriver
         self.arrayForCells = arrayOfCells
     }
@@ -240,7 +265,7 @@ extension NameElementCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailInfoCollectionViewCell.identifier, for: indexPath) as? DetailInfoCollectionViewCell else { print("error in collectionView cell"); return UICollectionViewCell() }
-        cell.configureCell(string: (model.arrayForCells?[indexPath.item])!)
+        cell.configureCell(model: (model.arrayForCells?[indexPath.item])!)
         return cell
     }
     
@@ -249,7 +274,8 @@ extension NameElementCell: UICollectionViewDataSource {
 
 extension NameElementCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width: CGFloat = contentView.frame.size.width * 0.4
-        return CGSize(width: width, height: width)
+        let width: CGFloat = contentView.frame.size.width * 0.42
+        let height: CGFloat = contentView.frame.size.width * 0.3
+        return CGSize(width: width, height: height)
     }
 }

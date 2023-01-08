@@ -20,6 +20,7 @@ class DetailImageTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(carImage)
+        
     }
     
     required init?(coder: NSCoder) {
