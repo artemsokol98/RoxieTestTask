@@ -5,21 +5,20 @@
 //  Created by Артем Соколовский on 03.01.2023.
 //
 
-import Foundation
 import UIKit
-
-struct CollectionViewCellModel {
-    let nameOfCell: String
-    let infoLabel: String
-}
 
 protocol DetailViewModelProtocol {
     var customElements: [CustomElementModel] { get set }
+    var data: AddressElement? { get set }
+    var image: Data? { get set }
     func parseForCollectionView(data: AddressElement) -> [CollectionViewCellModel]
+    func downloadImage(completion: @escaping (Result<Void,Error>) -> Void)
 }
 
 class DetailViewModel: DetailViewModelProtocol {
     var customElements: [CustomElementModel] = [PhotoElement(image: nil, apiString: nil), NameElement(nameDriver: nil, arrayOfCells: nil)]
+    var data: AddressElement?
+    var image: Data?
     
     func parseForCollectionView(data: AddressElement) -> [CollectionViewCellModel] {
         var arrayOfCells = [CollectionViewCellModel]()
@@ -64,46 +63,20 @@ class DetailViewModel: DetailViewModelProtocol {
         let date = dateFormatter.string(from: dateString)
         return date
     }
-}
-
-enum CustomElementType: String {
-    case photo
-    case nameDriver
-    case car
-}
-
-
-
-
-protocol CustomElementModel: AnyObject {
-    var type: CustomElementType { get }
-}
-
-protocol CustomElementCell: AnyObject {
-    static var identifier: String { get }
-    func configure(withModel: CustomElementModel?)
-}
-
-
-class PhotoElement: CustomElementModel {
-    var type: CustomElementType { return .photo }
-    var image: Data?
-    var apiString: String?
     
-    init(image: Data?, apiString: String?) {
-        self.image = image
-        self.apiString = apiString
+    func downloadImage(completion: @escaping (Result<Void,Error>) -> Void) {
+        guard let numberOfPhoto = data?.vehicle.photo else { return }
+        DataManager.shared.getImage(urlString: "https://www.roxiemobile.ru/careers/test/images/" + numberOfPhoto) { image in
+            switch image {
+            case .success(let image):
+                guard let image = image else {
+                    return
+                }
+                self.image = image
+                completion(.success(()))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
 }
-
-class NameElement: CustomElementModel {
-    var type: CustomElementType { return .nameDriver }
-    var name: String?
-    var arrayForCells: [CollectionViewCellModel]?
-    
-    init(nameDriver: String?, arrayOfCells: [CollectionViewCellModel]?) {
-        self.name = nameDriver
-        self.arrayForCells = arrayOfCells
-    }
-}
-

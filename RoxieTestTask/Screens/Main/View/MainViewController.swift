@@ -38,8 +38,7 @@ class MainViewController: UIViewController {
                 case .success():
                     self?.tableView.reloadData()
                 case .failure(let error):
-                    print(error)
-                    self?.showAlert(title: "Error", message: "Failed loading")
+                    self?.showAlert(title: "Error", message: error.localizedDescription)
                 }
             }
         })

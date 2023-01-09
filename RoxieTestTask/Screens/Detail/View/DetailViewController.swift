@@ -22,6 +22,8 @@ class DetailViewController: UIViewController {
     }
     
     let spinner = UIActivityIndicatorView(style: .large)
+    private var loadingView = UIActivityIndicatorView()
+   
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -31,11 +33,12 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel = DetailViewModel()
+        viewModel?.data = data
+        //tableView.backgroundView = spinner
+        loadingView = LoadingIndicator.shared.showLoading(in: tableView)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundView = spinner
         tableView.separatorStyle = .none
-        
         guard let photoElementCellReuseIdentifier = viewModel?.customElements[0].type.rawValue else { return }
         guard let nameElementCellReuseIdentifier = viewModel?.customElements[1].type.rawValue else { return }
         
@@ -45,31 +48,40 @@ class DetailViewController: UIViewController {
     }
     
     func sendRequest() {
-        spinner.startAnimating()
-        self.downloadImage { data in
+        //spinner.startAnimating()
+        //loadingView.startAnimating()
+        viewModel?.downloadImage { data in
             DispatchQueue.main.async {
-                self.spinner.stopAnimating()
-                self.fetchedImage = data
-                guard let dataForArrayOfCells = self.data else { return }
-                let nameDriver = NameElement(nameDriver: dataForArrayOfCells.vehicle.driverName, arrayOfCells: self.viewModel?.parseForCollectionView(data: dataForArrayOfCells))
-                let newImage = PhotoElement(image: self.fetchedImage, apiString: "https://www.roxiemobile.ru/careers/test/images/" + dataForArrayOfCells.vehicle.photo)
-                self.viewModel?.customElements = [newImage, nameDriver]
-                self.tableView.reloadData()
+                //self.spinner.stopAnimating()
+                self.loadingView.stopAnimating()
+                switch data {
+                case .success(()):
+                    self.fetchedImage = self.viewModel?.image
+                    guard let dataForArrayOfCells = self.viewModel?.data else { return }
+                    let nameDriver = NameElement(nameDriver: dataForArrayOfCells.vehicle.driverName, arrayOfCells: self.viewModel?.parseForCollectionView(data: dataForArrayOfCells))
+                    let newImage = PhotoElement(image: self.fetchedImage, apiString: "https://www.roxiemobile.ru/careers/test/images/" + dataForArrayOfCells.vehicle.photo)
+                    self.viewModel?.customElements = [newImage, nameDriver]
+                    self.tableView.reloadData()
+                case .failure(let error):
+                    self.showAlert(title: "Error", message: error.localizedDescription)
+                }
             }
         }
     }
     
-    func downloadImage(completion: @escaping (Data) -> Void) {
-        guard let numberOfPhoto = self.data?.vehicle.photo else { return }
-        DataManager.shared.getImage(urlString: "https://www.roxiemobile.ru/careers/test/images/" + numberOfPhoto) { image in
-            guard let image = image else {
-                return
-            }
-            completion(image)
+    private func showAlert(title: String, message: String) {
+        let action = UIAlertAction(title: "Try again", style: .default) { _ in
+            self.sendRequest()
         }
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(action)
+        present(alert, animated: true)
     }
-    
-    
+   
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         view.addSubview(tableView)
@@ -94,6 +106,7 @@ extension DetailViewController: UITableViewDelegate {
 
 extension DetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cellModel = viewModel?.customElements[indexPath.row]
         guard let cellIdentifier = cellModel?.type.rawValue else { return UITableViewCell() }
         guard let customCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? CustomElementCell else { return UITableViewCell() }
