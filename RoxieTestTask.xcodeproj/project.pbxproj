@@ -22,6 +22,7 @@
 		714FBF3A2966CBFB005BB77E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714FBF2D2966CBFB005BB77E /* SceneDelegate.swift */; };
 		716F583629689F1600F72591 /* DetailInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716F583529689F1600F72591 /* DetailInfoCollectionViewCell.swift */; };
 		71A78E70296B062D0014F823 /* PhotoElementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A78E6F296B062D0014F823 /* PhotoElementCell.swift */; };
+		71A78E72296B09B70014F823 /* NameElementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A78E71296B09B70014F823 /* NameElementCell.swift */; };
 		71AF2E6C296718AF00B3B5B4 /* ImageCache+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AF2E6A296718AF00B3B5B4 /* ImageCache+CoreDataClass.swift */; };
 		71AF2E6D296718AF00B3B5B4 /* ImageCache+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AF2E6B296718AF00B3B5B4 /* ImageCache+CoreDataProperties.swift */; };
 		71C71FE9296212E700264F36 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71C71FE7296212E700264F36 /* Main.storyboard */; };
@@ -66,6 +67,7 @@
 		714FBF2D2966CBFB005BB77E /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		716F583529689F1600F72591 /* DetailInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailInfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		71A78E6F296B062D0014F823 /* PhotoElementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoElementCell.swift; sourceTree = "<group>"; };
+		71A78E71296B09B70014F823 /* NameElementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameElementCell.swift; sourceTree = "<group>"; };
 		71AF2E6A296718AF00B3B5B4 /* ImageCache+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ImageCache+CoreDataClass.swift"; path = "RoxieTestTask/ImageCache+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		71AF2E6B296718AF00B3B5B4 /* ImageCache+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ImageCache+CoreDataProperties.swift"; path = "RoxieTestTask/ImageCache+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		71C71FDE296212E700264F36 /* RoxieTestTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RoxieTestTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,6 +123,7 @@
 				714FBF1E2966CBFB005BB77E /* DetailViewController.swift */,
 				714FBF1F2966CBFB005BB77E /* HeightOfTableViewRow.swift */,
 				714FBF202966CBFB005BB77E /* DetailViewModel.swift */,
+				71A78E71296B09B70014F823 /* NameElementCell.swift */,
 				71A78E6F296B062D0014F823 /* PhotoElementCell.swift */,
 				714FBF212966CBFB005BB77E /* DetailImageTableViewCell.swift */,
 				716F583529689F1600F72591 /* DetailInfoCollectionViewCell.swift */,
@@ -357,6 +360,7 @@
 				714FBF3A2966CBFB005BB77E /* SceneDelegate.swift in Sources */,
 				714FBF332966CBFB005BB77E /* MainViewController.swift in Sources */,
 				714FBF2F2966CBFB005BB77E /* HeightOfTableViewRow.swift in Sources */,
+				71A78E72296B09B70014F823 /* NameElementCell.swift in Sources */,
 				71C71FEC296212E700264F36 /* RoxieTestTask.xcdatamodeld in Sources */,
 				714FBF2E2966CBFB005BB77E /* DetailViewController.swift in Sources */,
 				714FBF362966CBFB005BB77E /* AddressModel.swift in Sources */,

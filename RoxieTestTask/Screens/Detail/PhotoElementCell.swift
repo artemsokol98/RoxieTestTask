@@ -11,9 +11,9 @@ class PhotoElementCell: UITableViewCell, CustomElementCell {
     
     static var identifier = "PhotoElement"
     
-    var model: PhotoElement!
+    var model: PhotoElement?
     
-    func configure(withModel elementModel: CustomElementModel) {
+    func configure(withModel elementModel: CustomElementModel?) {
         guard let model = elementModel as? PhotoElement else {
             print("Unable to cast model as ProfileElement: \(elementModel)")
             return
@@ -24,7 +24,7 @@ class PhotoElementCell: UITableViewCell, CustomElementCell {
     }
     
     func configureUI() {
-        if let unwrappedImage = model.image {
+        if let unwrappedImage = model?.image {
             carImage.image = UIImage(data: unwrappedImage)
         }
     }

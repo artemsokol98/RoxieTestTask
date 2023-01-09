@@ -97,7 +97,7 @@ class TaxiRideTableViewCell: UITableViewCell {
         
         rightVerticalStackView.frame = contentView.bounds
         rightVerticalStackView.axis = .vertical
-        rightVerticalStackView.alignment = .trailing
+        rightVerticalStackView.alignment = .leading
         rightVerticalStackView.distribution = .fillEqually
         rightVerticalStackView.translatesAutoresizingMaskIntoConstraints = false
         

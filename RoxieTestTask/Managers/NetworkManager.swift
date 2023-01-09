@@ -46,19 +46,4 @@ class NetworkManager {
             }
         }.resume()
     }
-    
-    
-    
-    
-    
-    func fetchImage(urlString: String) -> Data {
-        guard let url = URL(string: urlString) else { return Data() }
-        if let imageData = try? Data(contentsOf: url) {
-           return imageData //UIImage(data: imageData)!
-        }
-        //return UIImage(data: imageData)!; #warning("remove force unwrapping")
-        return Data()
-    }
-    
-    
 }

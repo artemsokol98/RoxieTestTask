@@ -61,9 +61,9 @@ class DetailInfoCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate(nameOfCellLabelConstraints)
     }
     
-    func configureCell(model: CollectionViewCellModel) {
-        nameOfCellLabel.text = model.nameOfCell
-        infoLabel.text = model.infoLabel
+    func configureCell(model: CollectionViewCellModel?) {
+        nameOfCellLabel.text = model?.nameOfCell
+        infoLabel.text = model?.infoLabel
     }
     
 }

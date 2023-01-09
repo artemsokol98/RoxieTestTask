@@ -54,12 +54,11 @@ class MainViewModel: MainViewModelProtocol {
     
     func dateConverter(dateString: String) -> String {
         let dateFormatterISO8601 = ISO8601DateFormatter()
-        let dateString = dateFormatterISO8601.date(from: dateString)! //.date(from: dateString)
+        guard let dateString = dateFormatterISO8601.date(from: dateString) else { return "2023" }
         let dateFormatter = DateFormatter()
         dateFormatter.timeStyle = .none
         dateFormatter.dateStyle = .long
         let date = dateFormatter.string(from: dateString)
         return date
     }
-    
 }

@@ -11,7 +11,7 @@ class DetailViewController: UIViewController {
     
     var data: AddressElement?
     var viewModel: DetailViewModelProtocol?
-    var fetchedImage: Data!
+    var fetchedImage: Data?
 
     var heightOfPhoto: (_ height: CGFloat) -> CGFloat = { (height: CGFloat) in
         return height * 0.5
@@ -36,8 +36,11 @@ class DetailViewController: UIViewController {
         tableView.backgroundView = spinner
         tableView.separatorStyle = .none
         
-        tableView.register(PhotoElementCell.self, forCellReuseIdentifier: (viewModel?.customElements[0].type.rawValue)!)
-        tableView.register(NameElementCell.self, forCellReuseIdentifier: (viewModel?.customElements[1].type.rawValue)!)
+        guard let photoElementCellReuseIdentifier = viewModel?.customElements[0].type.rawValue else { return }
+        guard let nameElementCellReuseIdentifier = viewModel?.customElements[1].type.rawValue else { return }
+        
+        tableView.register(PhotoElementCell.self, forCellReuseIdentifier: photoElementCellReuseIdentifier)
+        tableView.register(NameElementCell.self, forCellReuseIdentifier: nameElementCellReuseIdentifier)
         sendRequest()
     }
     
@@ -48,8 +51,8 @@ class DetailViewController: UIViewController {
                 self.spinner.stopAnimating()
                 self.fetchedImage = data
                 guard let dataForArrayOfCells = self.data else { return }
-                let nameDriver = NameElement(nameDriver: (self.data?.vehicle.driverName)!, arrayOfCells: self.viewModel?.parseForCollectionView(data: dataForArrayOfCells))
-                let newImage = PhotoElement(image: self.fetchedImage, apiString: "https://www.roxiemobile.ru/careers/test/images/" + (self.data?.vehicle.photo)!)
+                let nameDriver = NameElement(nameDriver: dataForArrayOfCells.vehicle.driverName, arrayOfCells: self.viewModel?.parseForCollectionView(data: dataForArrayOfCells))
+                let newImage = PhotoElement(image: self.fetchedImage, apiString: "https://www.roxiemobile.ru/careers/test/images/" + dataForArrayOfCells.vehicle.photo)
                 self.viewModel?.customElements = [newImage, nameDriver]
                 self.tableView.reloadData()
             }
@@ -57,15 +60,15 @@ class DetailViewController: UIViewController {
     }
     
     func downloadImage(completion: @escaping (Data) -> Void) {
-        print("image downloading...")
-        DataManager.shared.getImage(urlString: "https://www.roxiemobile.ru/careers/test/images/" + (self.data?.vehicle.photo)!) { image in
+        guard let numberOfPhoto = self.data?.vehicle.photo else { return }
+        DataManager.shared.getImage(urlString: "https://www.roxiemobile.ru/careers/test/images/" + numberOfPhoto) { image in
             guard let image = image else {
                 return
             }
             completion(image)
-        }//else { print("error"); return }
-        
+        }
     }
+    
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -84,26 +87,34 @@ class DetailViewController: UIViewController {
 }
 
 extension DetailViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
 
 extension DetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellModel = viewModel?.customElements[indexPath.row]
-        let cellIdentifier = cellModel?.type.rawValue
-        let customCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier!, for: indexPath) as! CustomElementCell;  #warning("remove force unwrapping")
-        customCell.configure(withModel: cellModel!)
-        return customCell as! UITableViewCell
+        guard let cellIdentifier = cellModel?.type.rawValue else { return UITableViewCell() }
+        guard let customCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? CustomElementCell else { return UITableViewCell() }
+        customCell.configure(withModel: cellModel)
+        guard let customCell = customCell as? UITableViewCell else { return UITableViewCell() }
+        return customCell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        (viewModel?.customElements.count)!
+        numberOfRowsInSection(numberOfElements: viewModel?.customElements.count)
+    }
+    
+    func numberOfRowsInSection(numberOfElements: Int?) -> Int {
+        guard let numberOfElements = numberOfElements else { return 0 }
+        return numberOfElements
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
         case 0: return heightOfPhoto(view.bounds.height)
-        case 1: return heightOfOneRowCollectionWithInfo(view.bounds.width) * CGFloat(((viewModel?.customElements.count)! / 2))
+        case 1: return heightOfOneRowCollectionWithInfo(view.bounds.width) * CGFloat((numberOfRowsInSection(numberOfElements: viewModel?.customElements.count) / 2))
         default: print("another row")
         }
         return CGFloat()
