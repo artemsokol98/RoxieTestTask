@@ -52,7 +52,7 @@ class DataManager {
         do {
             image = try? fetchDataFromCache(urlString: urlString)
             if image == nil { throw CoreDataErrors.CouldntFetchFromEntity }
-            completion(.success(image))//CoreDataErrors.CouldntFetchFromEntity
+            completion(.success(image))
         } catch {
             NetworkManager.shared.downloadData(urlString: urlString, expectingType: Data.self) { result in
                 switch result {

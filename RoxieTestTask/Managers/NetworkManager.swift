@@ -20,7 +20,7 @@ class NetworkManager {
         
         session.dataTask(with: url) { data, response, error in
             if let data = data, error == nil {
-                if let decodedData = try? JSONDecoder().decode(T.self, from: data) { //Address
+                if let decodedData = try? JSONDecoder().decode(T.self, from: data) {
                     completion(.success(decodedData))
                 } else {
                     completion(.success(data))
