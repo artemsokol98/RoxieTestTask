@@ -14,7 +14,6 @@ class NameElementCell: UITableViewCell, CustomElementCell {
     
     func configure(withModel elementModel: CustomElementModel?) {
         guard let model = elementModel as? NameElement else {
-            print("Unable to cast model as ProfileElement: \(elementModel)")
             return
         }
         self.model = model
@@ -28,7 +27,12 @@ class NameElementCell: UITableViewCell, CustomElementCell {
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+        layout.sectionInset = UIEdgeInsets(
+            top: Constants.nameAndPhotoElementCellEdgeInset,
+            left: Constants.nameAndPhotoElementCellEdgeInset,
+            bottom: Constants.nameAndPhotoElementCellEdgeInset,
+            right: Constants.nameAndPhotoElementCellEdgeInset
+        )
         let collectionView = UICollectionView(frame: .infinite, collectionViewLayout: layout)
         collectionView.register(DetailInfoCollectionViewCell.self, forCellWithReuseIdentifier: DetailInfoCollectionViewCell.identifier)
         return collectionView
@@ -47,16 +51,13 @@ class NameElementCell: UITableViewCell, CustomElementCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        
         let collectionViewConstraints = [
             collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             collectionView.topAnchor.constraint(equalTo: contentView.topAnchor),
             collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ]
-        
         NSLayoutConstraint.activate(collectionViewConstraints)
     }
 
@@ -82,8 +83,8 @@ extension NameElementCell: UICollectionViewDataSource {
 
 extension NameElementCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width: CGFloat = contentView.frame.size.width * 0.42
-        let height: CGFloat = contentView.frame.size.width * 0.3
+        let width: CGFloat = contentView.frame.size.width * Constants.nameElementCellWidthMultiplier
+        let height: CGFloat = contentView.frame.size.width * Constants.nameElementCellHeightMultiplier
         return CGSize(width: width, height: height)
     }
 }

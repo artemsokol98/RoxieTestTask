@@ -14,11 +14,11 @@ class DetailViewController: UIViewController {
     var fetchedImage: Data?
 
     var heightOfPhoto: (_ height: CGFloat) -> CGFloat = { (height: CGFloat) in
-        return height * 0.5
+        return height * Constants.multiplierHeightOfPhotoDetailView
     }
     
     let heightOfOneRowCollectionWithInfo: (CGFloat) -> CGFloat = { (width: CGFloat) in
-        return width * 1.15
+        return width * Constants.multiplierHeightOfOneRowCollectionWithInfo
     }
     
     let spinner = UIActivityIndicatorView(style: .large)
@@ -39,8 +39,8 @@ class DetailViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        guard let photoElementCellReuseIdentifier = viewModel?.customElements[0].type.rawValue else { return }
-        guard let nameElementCellReuseIdentifier = viewModel?.customElements[1].type.rawValue else { return }
+        guard let photoElementCellReuseIdentifier = viewModel?.customElements[Constants.zeroRow].type.rawValue else { return }
+        guard let nameElementCellReuseIdentifier = viewModel?.customElements[Constants.firstRow].type.rawValue else { return }
         
         tableView.register(PhotoElementCell.self, forCellReuseIdentifier: photoElementCellReuseIdentifier)
         tableView.register(NameElementCell.self, forCellReuseIdentifier: nameElementCellReuseIdentifier)
@@ -48,11 +48,8 @@ class DetailViewController: UIViewController {
     }
     
     func sendRequest() {
-        //spinner.startAnimating()
-        //loadingView.startAnimating()
         viewModel?.downloadImage { data in
             DispatchQueue.main.async {
-                //self.spinner.stopAnimating()
                 self.loadingView.stopAnimating()
                 switch data {
                 case .success(()):
@@ -126,8 +123,8 @@ extension DetailViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
-        case 0: return heightOfPhoto(view.bounds.height)
-        case 1: return heightOfOneRowCollectionWithInfo(view.bounds.width) * CGFloat((numberOfRowsInSection(numberOfElements: viewModel?.customElements.count) / 2))
+        case Constants.zeroRow: return heightOfPhoto(view.bounds.height)
+        case Constants.firstRow: return heightOfOneRowCollectionWithInfo(view.bounds.width) * CGFloat((numberOfRowsInSection(numberOfElements: viewModel?.customElements.count) / 2))
         default: print("another row")
         }
         return CGFloat()

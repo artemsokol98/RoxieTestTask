@@ -17,12 +17,13 @@ class MainViewModel: MainViewModelProtocol {
     var taxiRide: Address = [AddressElement]()
     
     var parsedTaxiRide = [TaxiRideTableViewCellModel]()
-    
+    let stringApi = "https://www.roxiemobile.ru/careers/test/orders.json"
     
     func fetchData(completion: @escaping (Result<Void, Error>) -> Void) {
-        NetworkManager.shared.downloadData { result in
+        NetworkManager.shared.downloadData(urlString: stringApi, expectingType: Address.self) { result in
             switch result {
-            case .success(var address):
+            case .success(let address):
+                guard var address = address as? Address else { return }
                 DispatchQueue.main.async {
                     address.sort(by: {$0.orderTime.compare($1.orderTime) == .orderedDescending})
                     self.taxiRide = address

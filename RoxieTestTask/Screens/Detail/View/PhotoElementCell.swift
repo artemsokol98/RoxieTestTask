@@ -15,7 +15,6 @@ class PhotoElementCell: UITableViewCell, CustomElementCell {
     
     func configure(withModel elementModel: CustomElementModel?) {
         guard let model = elementModel as? PhotoElement else {
-            print("Unable to cast model as ProfileElement: \(elementModel)")
             return
         }
         self.model = model
@@ -47,8 +46,13 @@ class PhotoElementCell: UITableViewCell, CustomElementCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
-        carImage.layer.cornerRadius = contentView.bounds.width * 0.2
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(
+            top: Constants.nameAndPhotoElementCellEdgeInset,
+            left: Constants.nameAndPhotoElementCellEdgeInset,
+            bottom: Constants.nameAndPhotoElementCellEdgeInset,
+            right: Constants.nameAndPhotoElementCellEdgeInset)
+        )
+        carImage.layer.cornerRadius = contentView.bounds.width * Constants.carImagePhotoElementCornerRadiusMultiplier
         carImage.translatesAutoresizingMaskIntoConstraints = false
         
         let carImageConstraints = [

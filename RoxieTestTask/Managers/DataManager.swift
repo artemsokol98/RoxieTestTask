@@ -54,9 +54,10 @@ class DataManager {
             if image == nil { throw CoreDataErrors.CouldntFetchFromEntity }
             completion(.success(image))//CoreDataErrors.CouldntFetchFromEntity
         } catch {
-            NetworkManager.shared.fetchImageAsync(urlString: urlString) { result in
+            NetworkManager.shared.downloadData(urlString: urlString, expectingType: Data.self) { result in
                 switch result {
                 case .success(let data):
+                    guard let data = data as? Data else { return }
                     image = data
                     self.createNewItemImage(apiString: urlString, image: image)
                     completion(.success(image))

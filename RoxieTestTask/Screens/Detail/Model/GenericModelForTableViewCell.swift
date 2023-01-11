@@ -13,9 +13,6 @@ enum CustomElementType: String {
     case car
 }
 
-
-
-
 protocol CustomElementModel: AnyObject {
     var type: CustomElementType { get }
 }

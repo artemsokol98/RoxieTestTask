@@ -14,7 +14,7 @@ class DetailInfoCollectionViewCell: UICollectionViewCell {
     lazy var nameOfCellLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = .systemFont(ofSize: 12.0)
+        label.font = .systemFont(ofSize: Constants.nameOfCellLabelDetailViewFontSize)
         return label
     }()
     
@@ -29,8 +29,8 @@ class DetailInfoCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         contentView.addSubview(infoLabel)
         contentView.addSubview(nameOfCellLabel)
-        contentView.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 0.5, alpha: 1)
-        contentView.layer.cornerRadius = contentView.bounds.width * 0.1
+        contentView.backgroundColor = Color.lightYellowColor
+        contentView.layer.cornerRadius = contentView.bounds.width * Constants.collectionViewCellCornerRadiusMultiplier
     }
     
     required init?(coder: NSCoder) {

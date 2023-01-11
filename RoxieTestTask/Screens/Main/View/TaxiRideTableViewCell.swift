@@ -12,7 +12,6 @@ class TaxiRideTableViewCell: UITableViewCell {
     static let identifier = "TaxiRideIdentifier"
     
     private lazy var leftVerticalStackView: UIStackView = {
-        
         let startAddress = UILabel()
         startAddress.numberOfLines = 0
         let endAddress = UILabel()
@@ -33,11 +32,6 @@ class TaxiRideTableViewCell: UITableViewCell {
         stackView.addArrangedSubview(costRide)
         
         return stackView
-    }()
-    
-    private lazy var generalLabel: UILabel = {
-        let label = UILabel()
-        return label
     }()
     
     private lazy var rightVerticalStackView: UIStackView = {
@@ -77,8 +71,8 @@ class TaxiRideTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(rightVerticalStackView)
         contentView.addSubview(leftVerticalStackView)
-        contentView.layer.cornerRadius = 10
-        contentView.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 0.5, alpha: 1)
+        contentView.layer.cornerRadius = contentView.bounds.width * Constants.collectionViewCellCornerRadiusMultiplier
+        contentView.backgroundColor = Color.lightYellowColor
     }
     
     required init?(coder: NSCoder) {
@@ -87,7 +81,12 @@ class TaxiRideTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 30, left: 30, bottom: 30, right: 30))
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(
+            top: Constants.nameAndPhotoElementCellEdgeInset,
+            left: Constants.nameAndPhotoElementCellEdgeInset,
+            bottom: Constants.nameAndPhotoElementCellEdgeInset,
+            right: Constants.nameAndPhotoElementCellEdgeInset)
+        )
         
         leftVerticalStackView.frame = contentView.bounds
         leftVerticalStackView.axis = .vertical

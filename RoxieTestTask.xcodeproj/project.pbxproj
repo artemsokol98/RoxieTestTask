@@ -19,6 +19,7 @@
 		714FBF382966CBFB005BB77E /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714FBF2A2966CBFB005BB77E /* NetworkManager.swift */; };
 		714FBF392966CBFB005BB77E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714FBF2C2966CBFB005BB77E /* AppDelegate.swift */; };
 		714FBF3A2966CBFB005BB77E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714FBF2D2966CBFB005BB77E /* SceneDelegate.swift */; };
+		71667346296EA1BF0029BB7B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71667345296EA1BF0029BB7B /* Constants.swift */; };
 		71698FAC296C441A00DCD79C /* CollectionViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71698FAB296C441A00DCD79C /* CollectionViewCellModel.swift */; };
 		71698FAE296C444B00DCD79C /* GenericModelForTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71698FAD296C444B00DCD79C /* GenericModelForTableViewCell.swift */; };
 		71698FB3296C71B500DCD79C /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71698FB2296C71B500DCD79C /* LoadingIndicator.swift */; };
@@ -66,6 +67,7 @@
 		714FBF2A2966CBFB005BB77E /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		714FBF2C2966CBFB005BB77E /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		714FBF2D2966CBFB005BB77E /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		71667345296EA1BF0029BB7B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		71698FAB296C441A00DCD79C /* CollectionViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCellModel.swift; sourceTree = "<group>"; };
 		71698FAD296C444B00DCD79C /* GenericModelForTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericModelForTableViewCell.swift; sourceTree = "<group>"; };
 		71698FB2296C71B500DCD79C /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				714FBF1D2966CBFB005BB77E /* Detail */,
 				714FBF222966CBFB005BB77E /* Main */,
 				71698FB2296C71B500DCD79C /* LoadingIndicator.swift */,
+				71667345296EA1BF0029BB7B /* Constants.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -409,6 +412,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				71AF2E6D296718AF00B3B5B4 /* ImageCache+CoreDataProperties.swift in Sources */,
+				71667346296EA1BF0029BB7B /* Constants.swift in Sources */,
 				71AF2E6C296718AF00B3B5B4 /* ImageCache+CoreDataClass.swift in Sources */,
 				714FBF382966CBFB005BB77E /* NetworkManager.swift in Sources */,
 				71698FB3296C71B500DCD79C /* LoadingIndicator.swift in Sources */,
@@ -534,7 +538,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -588,7 +592,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
